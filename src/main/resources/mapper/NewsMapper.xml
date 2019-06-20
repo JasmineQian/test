@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.NewsMapper" >
+
+  <resultMap id="BaseResultMap" type="com.example.demo.pojo.News" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="img_type" property="imgType" jdbcType="INTEGER" />
+    <result column="cover_img" property="coverImg" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="publisher" property="publisher" jdbcType="VARCHAR" />
+    <result column="publisher_face" property="publisherFace" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+    <select id="getNewsByNewsId" resultMap="BaseResultMap">
+        select  id,type_id,img_type,cover_img,title,publisher,publisher_face,content,create_time
+        from news
+        WHERE id =#{id}
+    </select>
+
+
+    <select id="getAllNews" resultMap="BaseResultMap">
+        select  id,type_id,img_type,cover_img,title,publisher,publisher_face,content,create_time
+        from news
+        order by id desc
+    </select>
+
+
+    <select id="getNewsListByTypeid" resultMap="BaseResultMap">
+        select id,type_id,img_type,cover_img,title,publisher,publisher_face,content,create_time
+        from news
+        where type_id = #{typeId}
+        order by id desc
+    </select>
+
+    <insert id="insert" parameterType="com.example.demo.pojo.News">
+        insert news(type_id,img_type,cover_img,title,publisher,publisher_face,content,create_time)
+        values(#{typeId},#{imgType},#{coverImg},#{title},#{publisher},#{publisherFace},#{content},now())
+    </insert>
+
+    <update id="updateById" parameterType="com.example.demo.pojo.News">
+        update news set type_id = #{typeId},
+        updatedt = now()
+        where id = #{id}
+    </update>
+
+
+
+</mapper>
